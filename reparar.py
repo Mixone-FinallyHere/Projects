@@ -3,7 +3,8 @@
 
 from os import startfile, path
 import subprocess
-
+import tkinter as tk
+import tk.filedialog as FileDiag
 
 
 def apertura(fichero):
@@ -34,20 +35,20 @@ def añadir(fichero, symbolo, nuevo_fichero):
 
 
 def main():
-    fichero = input("Cual es el nombre del fichero que requiere ser modificado? ")
+    root = tk.Tk()
+    fichero = FileDiag.askopenfile(mode='r', defaultextension='.txt')
     symbolo = input("Escriba el symbolo o symbolos que requieren ser añadidos a cada linea : ")
-    nuevo_fichero = input("Cual es el nombre del fichero donde desea guardar los resultados? ")
+    nuevo_fichero = FileDiag.asksavefile(mode='w', defaultextension='.txt')
     if ".txt" not in nuevo_fichero:
-        nuevo_fichero = nuevo_fichero + ".txt"
+        nuevo_fichero += ".txt"
     añadir(fichero, symbolo, nuevo_fichero)
     print("\nProceso acabado. Tenga un buen dia.")
     deseo = input("\nDesea ver el fichero corregido? : ")
     startfile(nuevo_fichero) if deseo == "si" else None
-
+    location = input("\nQuieres abrir la carpeta donde se encuentra el fichero corregido? ")
+    subprocess.Popen('explorer "C:\Python34"') if location == "si" else None
 
 if __name__ == "__main__":
     main()
-    location = input("\nQuieres abrir la carpeta donde se encuentra el fichero corregido? ")
-    subprocess.Popen('explorer "C:\Python34"') if location == "si" else None
     print("Goodbye!")
     
